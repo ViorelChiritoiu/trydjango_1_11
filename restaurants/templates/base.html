@@ -7,6 +7,18 @@
 <body>
     <h1>Hello World!</h1>
     <p>This is {{ html_var }} coming true.</p>
-    <p>Random number is {{ num }}.</p>
+
+    <p>
+        {% if html_var %}
+            Random number is {{ num }}.
+        {% endif %}
+    <p>
+        {% for some_item in some_list %}
+            {% if some_item|divisibleby:"2" %}
+                Even number
+            {% endif %}
+            {{ some_item }} <br/>
+        {% endfor %}
+    </p>
 </body>
 </html>
