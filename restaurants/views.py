@@ -4,4 +4,14 @@ import random
 
 def home(request):
     num = random.randint(0, 100)
-    return render(request, "base.html", {"html_var": "context_variable", "num": num})
+    some_list = [
+        num,
+        random.randint(0, 10),
+        random.randint(0, 1000)
+    ]
+    context ={
+        "html_var": True,
+        "num": num,
+        "some_list": some_list
+    }
+    return render(request, "base.html", context)
