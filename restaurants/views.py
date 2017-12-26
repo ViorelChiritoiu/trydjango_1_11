@@ -1,7 +1,7 @@
-# from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render
+import random
 
 
 def home(request):
-    return HttpResponse("hello")
-    # return render(request, "home.html", {}) #response
+    num = random.randint(0, 100)
+    return render(request, "base.html", {"html_var": "context_variable", "num": num})
