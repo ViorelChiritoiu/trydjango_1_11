@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block head_title %}MuyPicky.com{%endblock head_title %}</title>
+    {% include "snippets/css.html" %}
+    {% include "snippets/js.html" %}
 </head>
 <body>
-    <h1>Muypicky.com</h1>
-    <a href="/">Home</a>
-    <a href="/about/">About</a>
-    <a href="/contact/">Contact</a>
+    {% include "snippets/nav.html" %}
 
     <div class="container">
         {% block content %}{% endblock content %}
