@@ -1,21 +1,45 @@
-import random
-from django.views.generic import TemplateView
+from django.shortcuts import render
+from .models import RestaurantLocation
+from django.views.generic import ListView
+from django.db.models import Q
 
 
-class HomeView(TemplateView):
-    template_name = "home.html"
+def restaurant_list_view(request):
+    template_name = "restaurants/restaurants_list.html"
+    queryset = RestaurantLocation.objects.all()
+    context = {
+        "object_list": queryset,
+    }
+    return render(request, template_name, context)
 
-    def get_context_data(self, **kwargs):
-        context = super(HomeView, self).get_context_data(**kwargs)
-        num = random.randint(0, 100)
-        some_list = [
-            num,
-            random.randint(0, 10),
-            random.randint(0, 1000)
-        ]
-        context = {
-            "html_var": True,
-            "num": num,
-            "some_list": some_list
-        }
-        return context
+
+class RestaurantListView(ListView):
+    template_name = "restaurants/restaurants_list.html"
+
+    def get_queryset(self):
+        print(self.kwargs)
+        slug = self.kwargs.get("slug")
+        if slug:
+            queryset = RestaurantLocation.objects.filter(
+                Q(category__iexact=slug) |
+                Q(category__icontains=slug)
+            )
+        else:
+            queryset = RestaurantLocation.objects.all()
+        return queryset
+#
+#
+# class SearchRestaurantListView(ListView):
+#     template_name = "restaurants/restaurants_list.html"
+#
+#     def get_queryset(self):
+#         print(self.kwargs)
+#         slug = self.kwargs.get("slug")
+#         if slug:
+#             queryset = RestaurantLocation.objects.filter(
+#                 Q(category__iexact=slug) |
+#                 Q(category__icontains=slug)
+#             )
+#         else:
+#             queryset = RestaurantLocation.objects.none()
+#         return queryset
