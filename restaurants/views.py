@@ -1,7 +1,8 @@
+from django.shortcuts import render
 from .models import RestaurantLocation
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
-from django.shortcuts import get_object_or_404
+from .forms import RestaurantCreateForm
 
 #
 # def restaurant_list_view(request):
@@ -39,7 +40,17 @@ class RestaurantDetailView(DetailView):
     #     print(context)
     #     return context
 
-    def get_object(self, **kwargs):
-        rest_id = self.kwargs.get("pk")
-        obj = get_object_or_404(RestaurantLocation, id=rest_id)
-        return obj
+    # def get_object(self, **kwargs):
+    #     rest_id = self.kwargs.get("pk")
+    #     obj = get_object_or_404(RestaurantLocation, id=rest_id)
+    #     return obj
+
+
+def restaurant_create_form(request):
+    if request.method == "GET":
+        print("get data")
+    if request.method == "POST":
+        print("post data")
+    template_name = "restaurants/form.html"
+    context = {}
+    return render(request, template_name, context)
